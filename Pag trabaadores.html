@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporativo Soluciones Vega</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2b2b2b;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 30px;
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: #e60000;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #e60000;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #b50000;
+        }
+        .error {
+            color: #ff4d4d;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .content {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background-color: #1a1a1a;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 10px;
+        }
+        .search-bar {
+            padding: 12px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #444;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #333;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        .date {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #888;
+        }
+        /* Malicious buttons (hidden initially) */
+        .buttons-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .malicious-button {
+            padding: 15px 20px;
+            background-color: #e60000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .malicious-button:hover {
+            transform: scale(1.1);
+            background-color: #b50000;
+        }
+        .malicious-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsive styles for mobile */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            input[type="text"], input[type="password"] {
+                width: 90%;
+            }
+            button {
+                width: 90%;
+                font-size: 16px;
+            }
+            .search-bar {
+                width: 90%;
+                font-size: 16px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .malicious-button {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section -->
+    <div class="container" id="login-section">
+        <h1>Login</h1>
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button onclick="login()">Iniciar sesión</button>
+        <p class="error" id="login-error"></p>
+    </div>
+
+    <!-- Content Section (Visible after successful login) -->
+    <div class="content" id="content-section">
+        <h1>Bienvenido Jefe de seguridad R</h1>
+        <h2>¿Qué vamos a revisar hoy?</h2>
+
+        <!-- Search Bar and Confirm Button -->
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Buscar cámara por fecha" id="search" oninput="checkSearch()">
+            <button class="malicious-button" onclick="confirmSearch()">Confirmar búsqueda</button>
+        </div>
+        
+        <!-- Image and Date -->
+        <div class="image-container">
+            <img src="https://via.placeholder.com/800x400" alt="Imagen de cámara">
+        </div>
+    </div>
+
+    <!-- Malicious buttons container -->
+    <div class="buttons-container" id="buttons-container">
+        <button class="malicious-button" onclick="alert('Eliminando datos de seguridad...')">Eliminar datos de seguridad</button>
+        <button class="malicious-button" onclick="alert('Acceso completo a la red...')">Acceso completo a la red</button>
+        <button class="malicious-button" onclick="alert('Destruyendo evidencia...')">Destruir evidencia</button>
+    </div>
+
+    <script>
+        function login() {
+            // Get user input
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var loginError = document.getElementById("login-error");
+            
+            // Correct credentials
+            var correctUsername = "Jefaso123";
+            var correctPassword = "Fortknox123";
+            
+            // Validate user and password
+            if (username === correctUsername && password === correctPassword) {
+                // Hide login section and show content
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("content-section").style.display = "block";
+                document.getElementById("buttons-container").style.display = "flex"; // Show malicious buttons
+            } else if (username !== correctUsername) {
+                // Show error if user doesn't exist
+                loginError.textContent = "Ese usuario no existe";
+            } else if (password !== correctPassword) {
+                // Show error if password is incorrect
+                loginError.textContent = "Contraseña incorrecta";
+            }
+        }
+
+        function checkSearch() {
+            var search = document.getElementById("search").value;
+            if (search === "15/12/2024") {
+                window.location.href = "https://www.youtube.com"; // Redirigir a YouTube
+            }
+        }
+
+        function confirmSearch() {
+            var search = document.getElementById("search").value;
+            if (search === "15/12/2024") {
+                window.location.href = "https://www.youtube.com"; // Redirigir a YouTube
+            } else {
+                alert("Fecha no encontrada. Intenta de nuevo.");
+            }
+        }
+    </script>
+</body>
+</html>
